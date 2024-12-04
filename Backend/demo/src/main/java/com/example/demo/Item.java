@@ -1,14 +1,24 @@
 package com.example.demo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Table()
 public class Item{
-    private int id;
-    private int type;
-    private String name;
-    private int measurement;
-    private float quantity;
+
+
+    @Id
+    protected int id;
+    protected int type;
+    protected String name;
+    protected int measurement;
+    protected float quantity;
 
     public Item(int id, int type, String name, int measurement, float quantity) {
         this.id = id;
@@ -16,6 +26,9 @@ public class Item{
         this.name = name;
         this.measurement = measurement;
         this.quantity = quantity;
+    }
+    public Item(){
+
     }
 
     public int getId() {

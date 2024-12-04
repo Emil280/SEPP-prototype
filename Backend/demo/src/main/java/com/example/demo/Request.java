@@ -5,18 +5,30 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class Request{
     private String search;
-    private int vegan;
-    private int vegetarian;
+    private int recipeType;
     private int prepTime;
+    private int userId;
 
-    public Request(String search, int vegan, int vegetarian, int prepTime) {
+    public Request(String search, int recipeType, int prepTime,int userId) {
         this.search = search;
-        this.vegan = vegan;
-        this.vegetarian = vegetarian;
+        this.recipeType = recipeType;
         this.prepTime = prepTime;
+        this.userId = userId;
     }
 
-    public void extractJson(){
+    public String getSearch() {
+        return search;
+    }
 
+    public int getRecipeType() {
+        return recipeType;
+    }
+
+    public int getPrepTime() {
+        return prepTime;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }
