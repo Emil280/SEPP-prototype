@@ -8,7 +8,7 @@ itemID serial PRIMARY KEY,
 itemType int NOT NULL,
 name varchar NOT NULL,
 measurment int NOT NULL
-)
+);
 
 CREATE TABLE recipes
 (
@@ -17,18 +17,18 @@ name varchar NOT NULL,
 pictureLink varchar,
 instructions text NOT NULL,
 timeToMake time Not NULL
-)
+);
 
 CREATE TABLE fridge
 (
 itemID int REFERENCES items(itemID) NOT NULL,
 userID int NOT NULL,
-quantity float NOT NULL
-)
+quantity float NOT NULL check (quantity > 0)
+);
 
 Create TABLE ingredients
 (
 itemID int REFERENCES items(itemID) NOT NULL,
 recipeID int REFERENCES recipes(recipeID) NOT NULL,
-quantity float NOT NULL
-)
+quantity float NOT NULL check (quantity > 0)
+);
