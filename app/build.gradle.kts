@@ -31,8 +31,8 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -40,4 +40,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation ("com.google.code.gson:gson:2.10.1")  // Gson dependency
+    implementation ("androidx.appcompat:appcompat:1.3.1")
 }

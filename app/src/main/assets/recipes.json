@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Recipe 1",
+    "prepTime": "30 minutes",
+    "ingredients": ["Ingredient 1", "Ingredient 2"]
+  },
+  {
+    "name": "Recipe 2",
+    "prepTime": "45 minutes",
+    "ingredients": ["Ingredient A", "Ingredient B"]
+  }
+]
