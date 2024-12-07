@@ -196,8 +196,28 @@ Drizzle 1 teaspoon of oil into a medium non-stick frying pan over a medium-low h
 Remove to a board and cut into triangles. Serve with the yoghurt, a drizzle of honey and any seasonal fresh fruit you have in your fruit bowl.", 'https://asset.jamieoliver.com/images/cq7w2e71/production/e2ffb07bbcc946363e6a47714b8669f413dea125-958x1280.png/70064535', '00:10')
 );
 
-INSERT INTO fridge (itemID, userID, quantity) (
-VALUES ()
+INSERT INTO fridge (userID, itemID, quantity) (
+VALUES (1, 35, 12),
+(1, 42, 8),
+(1, 15, 3),
+(1, 12, 7),
+(1, 28, 4),
+(1, 30, 2),
+(1, 4, 1),
+(1, 27, 4),
+(1, 7, 200),
+(1, 8, 1),
+(1, 82, 1),
+(1, 25, 6),
+(1, 52, 1.2),
+(1, 90, 2),
+(1, 93, 29),
+(1, 46, 10),
+(1, 88, 3),
+(1, 9, 300),
+(1, 53, 2),
+(1, 68, 5),
+(1, 2, 0.5)
 );
 
 INSERT INTO ingredients (recipeID, itemID, quantity) (
