@@ -1,11 +1,12 @@
 package com.example.demo;
-
+import com.example.demo.ApplicationContext.ApplicationContextProvider;
 import com.example.demo.FridgeItem.FridgeItem;
 import com.example.demo.FridgeItem.FridgeItemService;
 import com.example.demo.Recipe.Recipe;
 import com.example.demo.Recipe.RecipeService;
 import com.example.demo.RecipeIngredient.RecipeIngredient;
 import com.example.demo.RecipeIngredient.RecipeIngredientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -21,8 +22,11 @@ import java.util.Optional;
 @RestController
 public class DemoApplication {
 	Request currentRequest;
+	@Autowired
+	ApplicationContextProvider applicationContextProvider;
+
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		ApplicationContext myContext = SpringApplication.run(DemoApplication.class, args);
 	}
 	@RequestMapping("/request")
 	public void dealWithRequest(@RequestBody Request request){
@@ -30,11 +34,9 @@ public class DemoApplication {
 	}
 	@RequestMapping("/findFilteredRecipes")
 	public List<String> findFilteredRecipes(){
-		String[] args = {};
-		ApplicationContext myContext = SpringApplication.run(DemoApplication.class, args);
-		RecipeService myRecipeService = myContext.getBean(RecipeService.class);
-		RecipeIngredientService myRecipeIngredientService = myContext.getBean(RecipeIngredientService.class);
-		FridgeItemService myFridgeItemService = myContext.getBean((FridgeItemService.class));
+		RecipeService myRecipeService = applicationContextProvider.getApplicationContext().getBean(RecipeService.class);
+		RecipeIngredientService myRecipeIngredientService = applicationContextProvider.getApplicationContext().getBean(RecipeIngredientService.class);
+		FridgeItemService myFridgeItemService = applicationContextProvider.getApplicationContext().getBean(FridgeItemService.class);
 		ArrayList<String> myRecipes = new ArrayList<>();
 		for (Recipe recipe : myRecipeService.getRecipes()){
 			if (recipe.getName().toUpperCase().contains(currentRequest.getSearch().toUpperCase())){
@@ -60,13 +62,5 @@ public class DemoApplication {
 		return myRecipes;
 
 	}
-	@RequestMapping("/testString")
-	public List<Recipe> testString(){
-		String[] args = {};
-		ApplicationContext myContext = SpringApplication.run(DemoApplication.class, args);
-		RecipeService myRecipeService = myContext.getBean(RecipeService.class);
-		RecipeIngredientService myRecipeIngredientService = myContext.getBean(RecipeIngredientService.class);
-		FridgeItemService myFridgeItemService = myContext.getBean((FridgeItemService.class));
-		return myRecipeService.getRecipes();
-	}
+
 }

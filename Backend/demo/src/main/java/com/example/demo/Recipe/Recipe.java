@@ -17,7 +17,7 @@ public class Recipe{
     @Column(name = "recipeID")
     private int id;
 
-    @Column(name = "instructions")
+    @Column(name = "instructions", length = 10000)
     private String instructions;
 
     @Column(name = "timetomake")
