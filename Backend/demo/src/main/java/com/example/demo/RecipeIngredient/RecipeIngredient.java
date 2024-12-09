@@ -1,12 +1,10 @@
 package com.example.demo.RecipeIngredient;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ingredients")
+@IdClass(RecipeIngredientId.class)
 public class RecipeIngredient {
     public RecipeIngredient(int recipeId, int itemId, float quantity) {
         this.recipeId = recipeId;
@@ -16,6 +14,8 @@ public class RecipeIngredient {
     @Id
     @Column(name = "recipeid")
     private int recipeId;
+
+    @Id
     @Column(name="itemid")
     private int itemId;
     @Column(name = "quantity")

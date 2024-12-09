@@ -17,7 +17,7 @@ public class FridgeItem {
     private int itemId;
 
     @Column(name = "quantity")
-    private int quantity;
+    private float quantity;
 
     public FridgeItem(int userId, int itemId, int quantity) {
         this.userId = userId;
@@ -33,7 +33,7 @@ public class FridgeItem {
         return itemId;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 }

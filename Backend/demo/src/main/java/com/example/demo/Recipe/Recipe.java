@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import java.sql.Time;
 
 @Entity
 @Table(name = "recipes")
@@ -21,7 +21,7 @@ public class Recipe{
     private String instructions;
 
     @Column(name = "timetomake")
-    private String time;
+    private java.sql.Time time;
 
     @Column(name = "picturelink")
     private String pictureLink;
@@ -38,7 +38,7 @@ public class Recipe{
         return instructions;
     }
 
-    public String getTime() {
+    public java.sql.Time getTime() {
         return time;
     }
 

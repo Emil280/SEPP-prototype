@@ -60,4 +60,13 @@ public class DemoApplication {
 		return myRecipes;
 
 	}
+	@RequestMapping("/testString")
+	public List<Recipe> testString(){
+		String[] args = {};
+		ApplicationContext myContext = SpringApplication.run(DemoApplication.class, args);
+		RecipeService myRecipeService = myContext.getBean(RecipeService.class);
+		RecipeIngredientService myRecipeIngredientService = myContext.getBean(RecipeIngredientService.class);
+		FridgeItemService myFridgeItemService = myContext.getBean((FridgeItemService.class));
+		return myRecipeService.getRecipes();
+	}
 }
