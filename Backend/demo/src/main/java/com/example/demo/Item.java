@@ -1,14 +1,15 @@
 package com.example.demo;
 
-import jakarta.persistence.*;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "items")
 public class Item{
 
-
+    @Id
     @Column(name = "itemid")
     protected int id;
 
@@ -67,8 +68,8 @@ public class Item{
     }
 
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Item{" +
                 "id=" + id +
                 ", type=" + type +

@@ -3,12 +3,13 @@ package com.example.demo.FridgeItem;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "fridge")
 public class FridgeItem {
 
+    @Id
     @Column(name="userID")
     private int userId;
 
