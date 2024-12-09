@@ -1,22 +1,28 @@
-package com.example.demo;
+package com.example.demo.Recipe;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @Entity
-//@Table
+@Table(name = "recipes")
 public class Recipe{
-    private String name;
-    private int id;
-    private String instructions;
-    private int time;
-    private int recipeType;
-    //time is in minutes
-    //private image image idk how to do this yet
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "recipeID")
+    private int id;
+
+    @Column(name = "instructions")
+    private String instructions;
+
+    @Column(name = "timetomake")
+    private String time;
+
+    @Column(name = "picturelink")
+    private String pictureLink;
 
     public String getName() {
         return name;
@@ -30,12 +36,12 @@ public class Recipe{
         return instructions;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
-    public int getRecipeType() {
-        return recipeType;
+    public String getPictureLink(){
+        return pictureLink;
     }
 
     @Override
@@ -44,8 +50,8 @@ public class Recipe{
                 "name='" + name + '\'' +
                 ", id=" + id +
                 ", instructions='" + instructions + '\'' +
-                ", time=" + time +
-                ", recipeType=" + recipeType +
+                ", time='" + time + '\'' +
+                ", pictureLink='" + pictureLink + '\'' +
                 '}';
     }
 }

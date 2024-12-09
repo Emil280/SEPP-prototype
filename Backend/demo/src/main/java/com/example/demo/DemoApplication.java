@@ -1,5 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.FridgeItem.FridgeItem;
+import com.example.demo.FridgeItem.FridgeItemService;
+import com.example.demo.Recipe.Recipe;
+import com.example.demo.Recipe.RecipeService;
+import com.example.demo.RecipeIngredient.RecipeIngredient;
+import com.example.demo.RecipeIngredient.RecipeIngredientService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -32,7 +38,7 @@ public class DemoApplication {
 		FridgeItemService myFridgeItemService = myContext.getBean((FridgeItemService.class));
 		ArrayList<String> myRecipes = new ArrayList<>();
 		for (Recipe recipe : myRecipeService.getRecipes()){
-			if (recipe.getName().toUpperCase().contains(currentRequest.getSearch().toUpperCase()) && currentRequest.getRecipeType() <= recipe.getRecipeType() && currentRequest.getPrepTime() >= recipe.getTime()){
+			if (recipe.getName().toUpperCase().contains(currentRequest.getSearch().toUpperCase())){
 				List<RecipeIngredient> ingredientList = myRecipeIngredientService.getRecipeIngredientsById(recipe.getId());
 				boolean ingredientsRequired = true;
 				for (RecipeIngredient recipeIngredient : ingredientList){
@@ -50,7 +56,6 @@ public class DemoApplication {
 				if (ingredientsRequired){
 					myRecipes.add(recipe.toString());
 				}
-
 			}
 		}
 		return myRecipes;

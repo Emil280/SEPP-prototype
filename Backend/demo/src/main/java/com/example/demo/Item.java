@@ -1,31 +1,34 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@Table()
+@Table(name = "items")
 public class Item{
 
 
-    @Id
+    @Column(name = "itemid")
     protected int id;
-    protected int type;
-    protected String name;
-    protected int measurement;
-    protected float quantity;
 
-    public Item(int id, int type, String name, int measurement, float quantity) {
+    @Column(name = "itemtype")
+    protected int type;
+
+    @Column(name = "name")
+    protected String name;
+
+    @Column(name = "measurement")
+    protected int measurement;
+
+
+
+    public Item(int id, int type, String name, int measurement) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.measurement = measurement;
-        this.quantity = quantity;
+
     }
     public Item(){
 
@@ -63,13 +66,6 @@ public class Item{
         this.measurement = measurement;
     }
 
-    public float getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(float quantity) {
-        this.quantity = quantity;
-    }
 
     @java.lang.Override
     public java.lang.String toString() {
@@ -78,7 +74,6 @@ public class Item{
                 ", type=" + type +
                 ", name='" + name + '\'' +
                 ", measurement=" + measurement +
-                ", quantity=" + quantity +
                 '}';
     }
 }
