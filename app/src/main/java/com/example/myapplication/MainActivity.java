@@ -21,8 +21,9 @@ public class MainActivity extends Activity {
 
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private List<Recipe> allRecipes;
-    private List<Recipe> filteredRecipes;
+    private List<Recipe> allRecipes = new ArrayList<>();
+    private List<Recipe> filteredRecipes = new ArrayList<>();
+    private final String API_URL = "http://localhost:8080/findFilteredRecipes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +33,35 @@ public class MainActivity extends Activity {
         recyclerView = findViewById(R.id.recipeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Load recipes from the JSON file
-        allRecipes = RecipeUtils.loadRecipes(this);
-        filteredRecipes = new ArrayList<>(allRecipes); // Initially show all recipes
-
-        if (filteredRecipes != null) {
-            recipeAdapter = new RecipeAdapter(filteredRecipes);
-            recyclerView.setAdapter(recipeAdapter);
-        } else {
-            Toast.makeText(this, "Error loading recipes", Toast.LENGTH_SHORT).show();
-        }
+        fetchRecipes("{}"); // Fetch all recipes initially
 
         // Set up filter button
         Button filterButton = findViewById(R.id.buttonFilter);
         filterButton.setOnClickListener(v -> showFilterPopup());
+    }
+
+    private void fetchRecipes(String filterJson) {
+        new Thread(() -> {
+            List<Recipe> recipes = RecipeUtils.loadRecipes(API_URL, filterJson);
+            if (recipes != null) {
+                runOnUiThread(() -> {
+                    allRecipes.clear();
+                    allRecipes.addAll(recipes);
+                    filteredRecipes.clear();
+                    filteredRecipes.addAll(allRecipes);
+
+                    if (recipeAdapter == null) {
+                        recipeAdapter = new RecipeAdapter(filteredRecipes);
+                        recyclerView.setAdapter(recipeAdapter);
+                    } else {
+                        recipeAdapter.notifyDataSetChanged();
+                    }
+                    Toast.makeText(MainActivity.this, "Recipes loaded", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Failed to load recipes", Toast.LENGTH_SHORT).show());
+            }
+        }).start();
     }
 
     private void showFilterPopup() {
@@ -76,44 +92,30 @@ public class MainActivity extends Activity {
     }
 
     private void applyFilters(boolean isVegan, boolean isVegetarian, boolean is0_20, boolean is20_40, boolean is40_60, boolean is60plus) {
-        // Filter the recipes based on the selected filters
-        filteredRecipes.clear();
+        // Create filter JSON object
+        String filterJson = createFilterJson(isVegan, isVegetarian, is0_20, is20_40, is40_60, is60plus);
 
-        for (Recipe recipe : allRecipes) {
-            boolean matches = true;
+        // Fetch recipes based on the filters
+        fetchRecipes(filterJson);
+    }
 
-            // Check Vegan/Vegetarian filters
-//            if (isVegan && !recipe.isVegan()) {
-//                matches = false;
-//            }
-//            if (isVegetarian && !recipe.isVegetarian()) {
-//                matches = false;
-//            }
+    private String createFilterJson(boolean isVegan, boolean isVegetarian, boolean is0_20, boolean is20_40, boolean is40_60, boolean is60plus) {
+        StringBuilder filterBuilder = new StringBuilder("{");
 
-            // Check prep time filters
-            int prepTime = Integer.parseInt(recipe.getPrepTime().replaceAll("[^0-9]", "")); // Extract number from string
-            if (is0_20 && (prepTime < 0 || prepTime > 20)) {
-                matches = false;
-            }
-            if (is20_40 && (prepTime < 20 || prepTime > 40)) {
-                matches = false;
-            }
-            if (is40_60 && (prepTime < 40 || prepTime > 60)) {
-                matches = false;
-            }
-            if (is60plus && prepTime <= 60) {
-                matches = false;
-            }
+        if (isVegan) filterBuilder.append("\"vegan\":true,");
+        if (isVegetarian) filterBuilder.append("\"vegetarian\":true,");
+        if (is0_20) filterBuilder.append("\"prepTimeRange\":\"0-20\",");
+        if (is20_40) filterBuilder.append("\"prepTimeRange\":\"20-40\",");
+        if (is40_60) filterBuilder.append("\"prepTimeRange\":\"40-60\",");
+        if (is60plus) filterBuilder.append("\"prepTimeRange\":\"60+\",");
 
-            // If recipe matches all selected filters, add it to the filtered list
-            if (matches) {
-                filteredRecipes.add(recipe);
-            }
+        // Remove trailing comma if present
+        if (filterBuilder.charAt(filterBuilder.length() - 1) == ',') {
+            filterBuilder.deleteCharAt(filterBuilder.length() - 1);
         }
 
-        // Update RecyclerView with filtered recipes
-        recipeAdapter.notifyDataSetChanged();
-        Toast.makeText(this, filteredRecipes.size() + " recipes found", Toast.LENGTH_SHORT).show();
+        filterBuilder.append("}");
+        return filterBuilder.toString();
     }
 }
 
