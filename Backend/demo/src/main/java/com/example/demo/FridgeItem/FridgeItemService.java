@@ -24,4 +24,7 @@ public class FridgeItemService {
         return fridgeItemRepository.findFridgeItemByIds(userid, itemid);
 
     }
+    public List<FridgeItem> getFridgeItemsByUserId(int userid){
+        return fridgeItemRepository.findFridgeItemByUserId(userid);
+    }
 }

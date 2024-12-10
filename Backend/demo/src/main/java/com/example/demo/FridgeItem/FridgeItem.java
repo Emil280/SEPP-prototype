@@ -1,18 +1,18 @@
 package com.example.demo.FridgeItem;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 @Entity
 @Table(name = "fridge")
+@IdClass(FridgeItemId.class)
 public class FridgeItem {
 
     @Id
     @Column(name="userID")
     private int userId;
 
+    @Id
     @Column(name="itemID")
     private int itemId;
 
@@ -24,7 +24,7 @@ public class FridgeItem {
         this.itemId = itemId;
         this.quantity = quantity;
     }
-
+    public FridgeItem(){}
     public int getUserId() {
         return userId;
     }

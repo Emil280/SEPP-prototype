@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.sql.Time;
+import java.time.Duration;
 
 @Entity
 @Table(name = "recipes")
@@ -38,8 +39,22 @@ public class Recipe{
         return instructions;
     }
 
-    public String getTime() {
-        return time;
+    public int getTime() {
+
+        if (time.length() == 8){
+            String[] values = time.split(":");
+            Duration duration = Duration.ofHours(Integer.parseInt(values[0]));
+            duration = duration.plusMinutes(Integer.parseInt(values[1]));
+            duration = duration.plusSeconds(Integer.parseInt(values[2]));
+            return (int) duration.getSeconds();
+        } else if (time.length() == 5) {
+            String[] values = time.split(":");
+            Duration duration = Duration.ofMinutes(Integer.parseInt(values[0]));
+            duration = duration.plusSeconds(Integer.parseInt(values[1]));
+            return (int) duration.getSeconds();
+        } else {
+            return Integer.parseInt(time);
+        }
     }
 
     public String getPictureLink(){
