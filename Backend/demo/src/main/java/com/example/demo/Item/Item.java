@@ -11,16 +11,16 @@ public class Item{
 
     @Id
     @Column(name = "itemid")
-    protected int id;
+    private Integer id;
 
     @Column(name = "itemtype")
-    protected int type;
+    private Integer type;
 
     @Column(name = "name")
-    protected String name;
+    private String name;
 
     @Column(name = "measurement")
-    protected int measurement;
+    private Integer measurement;
 
 
 

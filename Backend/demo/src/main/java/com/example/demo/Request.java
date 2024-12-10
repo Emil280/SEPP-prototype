@@ -28,4 +28,14 @@ public class Request{
     public int getUserId() {
         return userId;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "search='" + search + '\'' +
+                ", recipeType=" + recipeType +
+                ", prepTime=" + prepTime +
+                ", userId=" + userId +
+                '}';
+    }
 }

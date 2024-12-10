@@ -21,7 +21,7 @@ public class Recipe{
     private String instructions;
 
     @Column(name = "timetomake")
-    private java.sql.Time time;
+    private String time;
 
     @Column(name = "picturelink")
     private String pictureLink;
@@ -38,7 +38,7 @@ public class Recipe{
         return instructions;
     }
 
-    public java.sql.Time getTime() {
+    public String getTime() {
         return time;
     }
 

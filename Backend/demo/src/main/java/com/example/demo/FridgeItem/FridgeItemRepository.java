@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FridgeItemRepository extends JpaRepository<FridgeItem,Integer> {
 
-    @Query(value = "SELECT * FROM FridgeItem WHERE userid = :userId, itemid = :itemId", nativeQuery = true)
+    @Query(value = "SELECT * FROM fridge WHERE userid = :userId AND itemid = :itemId", nativeQuery = true)
     Optional<FridgeItem> findFridgeItemByIds(int userId, int itemId);
 }

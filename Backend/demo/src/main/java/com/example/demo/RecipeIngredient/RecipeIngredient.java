@@ -11,6 +11,7 @@ public class RecipeIngredient {
         this.itemId = itemId;
         this.quantity = quantity;
     }
+    public RecipeIngredient() {}
     @Id
     @Column(name = "recipeid")
     private int recipeId;
@@ -18,6 +19,7 @@ public class RecipeIngredient {
     @Id
     @Column(name="itemid")
     private int itemId;
+
     @Column(name = "quantity")
     private float quantity;
 
