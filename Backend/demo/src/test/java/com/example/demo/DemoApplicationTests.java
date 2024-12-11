@@ -14,18 +14,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,6 +99,40 @@ class DemoApplicationTests {
 		verify(recipeIngredientService, times(1)).getRecipeIngredientsById(1);
 		verify(itemService, times(1)).getItems();
 		verify(fridgeItemService, times(1)).getFridgeItemsByUserId(1);
+	}
+
+	@Test
+	void testGetRandomRecipe() throws Exception {
+		// Mock data
+		Recipe recipe = new Recipe(1, "Random Recipe", 15);
+		when(recipeService.getRecipes()).thenReturn(Collections.singletonList(recipe));
+
+		// Perform GET request
+		mockMvc.perform(get("/randomRecipe"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Random Recipe")));
+
+		// Verify interactions
+		verify(recipeService, times(1)).getRecipes();
+	}
+
+	@Test
+	void testGetRandomRecipes() throws Exception {
+		// Mock data
+		Recipe recipe1 = new Recipe(1, "Recipe 1", 10);
+		Recipe recipe2 = new Recipe(2, "Recipe 2", 20);
+		Recipe recipe3 = new Recipe(3, "Recipe 3", 30);
+		List<Recipe> recipes = Arrays.asList(recipe1, recipe2, recipe3);
+		when(recipeService.getRecipes()).thenReturn(recipes);
+
+		// Perform GET request
+		mockMvc.perform(get("/randomRecipes"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Recipe")))
+				.andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(10))));
+
+		// Verify interactions
+		verify(recipeService, times(1)).getRecipes();
 	}
 
 	@Test

@@ -81,6 +81,20 @@ public class DemoApplication {
 		return new Gson().toJson(randomRecipe);
 	}
 
+	@GetMapping("/randomRecipes")
+	public String getRandomRecipes() {
+		RecipeService recipeService = applicationContextProvider.getApplicationContext().getBean(RecipeService.class);
+		List<Recipe> recipes = recipeService.getRecipes();
+
+		if (recipes.isEmpty()) {
+			return "[]";
+		}
+
+		Collections.shuffle(recipes);
+		List<Recipe> randomRecipes = recipes.subList(0, Math.min(10, recipes.size()));
+		return new Gson().toJson(randomRecipes);
+	}
+
 	private boolean isValidRecipe(Recipe recipe, List<Item> itemList, List<FridgeItem> fridgeItemList) {
 		if (!recipe.getName().toUpperCase().contains(currentRequest.getSearch().toUpperCase()) || recipe.getTime() > currentRequest.getTime()) {
 			return false;
