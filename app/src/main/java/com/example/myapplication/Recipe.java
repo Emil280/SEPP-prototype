@@ -5,6 +5,8 @@ import java.util.List;
 public class Recipe {
     private String name;
     private String prepTime;
+
+    private String instructions;
     private List<String> ingredients;
 
     public Recipe(String name) {
