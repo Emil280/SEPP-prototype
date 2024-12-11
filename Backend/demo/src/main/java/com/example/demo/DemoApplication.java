@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,11 @@ public class DemoApplication {
 		return fridgeItemList.stream().filter(fridgeItem -> fridgeItem.getItemId() == id).findFirst();
 	}
 
+	@RequestMapping("/hello")
+	public String hello(){
+		System.out.println("hello");
+		return "Hello World!";
+	}
 	@RequestMapping("/findFilteredRecipes")
 	public String findFilteredRecipes(@RequestBody Request request) {
 		currentRequest = request;

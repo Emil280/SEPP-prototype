@@ -1,0 +1,14 @@
+{
+  "recipes": [
+    {
+      "name": "Chocolate Cake",
+      "prep_time": "30 mins",
+      "ingredients": ["flour", "cocoa powder", "sugar", "eggs"]
+    },
+    {
+      "name": "Pancakes",
+      "prep_time": "15 mins",
+      "ingredients": ["flour", "milk", "eggs", "sugar"]
+    }
+  ]
+}

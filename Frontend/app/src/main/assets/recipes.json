@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Ratatouille",
+    "prepTime": "1:50:00",
+    "ingredients": ["vanilla pods", "sugar", "lemons", "limes", "avocado", "milk"]
+  },
+  {
+    "name": "Avocado ice cream",
+    "prepTime": "1:50:00",
+    "ingredients": ["vanilla pods", "sugar", "lemons", "limes", "avocado", "milk"]
+  },
+  {
+    "name": "Chocolate Cake",
+    "prepTime": "1:30:00",
+    "ingredients": ["flour", "sugar", "cocoa powder", "baking soda", "eggs", "milk", "butter", "vanilla extract"]
+  },
+  {
+    "name": "Vegetable Stir Fry",
+    "prepTime": "40:00",
+    "ingredients": ["carrots", "broccoli", "bell peppers", "soy sauce", "garlic", "ginger", "tofu", "rice"]
+  },
+  {
+    "name": "Pasta Primavera",
+    "prepTime": "35:00",
+    "ingredients": ["pasta", "zucchini", "cherry tomatoes", "garlic", "olive oil", "parmesan cheese", "basil"]
+  },
+  {
+    "name": "Mango Sorbet",
+    "prepTime": "1:00:00",
+    "ingredients": ["mangoes", "sugar", "lime juice", "water"]
+  },
+  {
+    "name": "Classic Pancakes",
+    "prepTime": "25:00",
+    "ingredients": ["flour", "sugar", "baking powder", "milk", "eggs", "butter", "vanilla extract"]
+  },
+  {
+    "name": "Caesar Salad",
+    "prepTime": "20:00",
+    "ingredients": ["romaine lettuce", "croutons", "parmesan cheese", "caesar dressing", "lemon juice"]
+  }
+]
+
