@@ -8,7 +8,7 @@ public class Recipe {
     private List<String> ingredients;
 
     // Constructor
-    public Recipe(String name, String prepTime, List<String> ingredients) {
+    public Recipe(String name) {
         this.name = name;
         this.prepTime = prepTime;
         this.ingredients = ingredients;
