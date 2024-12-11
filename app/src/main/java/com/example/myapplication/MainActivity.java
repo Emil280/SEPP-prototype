@@ -110,6 +110,11 @@ public class MainActivity extends Activity {
         if (is60plus) filterBuilder.append("\"prepTimeRange\":\"60+\",");
 
         // Remove trailing comma if present
+
+        if (filterBuilder.length() == 1) {
+            return "{\"default\":true}";
+        }
+
         if (filterBuilder.charAt(filterBuilder.length() - 1) == ',') {
             filterBuilder.deleteCharAt(filterBuilder.length() - 1);
         }
