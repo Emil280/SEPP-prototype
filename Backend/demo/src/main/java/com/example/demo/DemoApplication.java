@@ -41,11 +41,12 @@ public class DemoApplication {
 		return fridgeItemList.stream().filter(fridgeItem -> fridgeItem.getItemId() == id).findFirst();
 	}
 
-	@RequestMapping("/hello")
+	@RequestMapping("/test")
 	public String hello(){
-		System.out.println("hello");
+		System.out.println("test endpoint called");
 		return "Hello World!";
 	}
+
 	@RequestMapping("/findFilteredRecipes")
 	public String findFilteredRecipes(@RequestBody Request request) {
 		currentRequest = request;
