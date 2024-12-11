@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +46,15 @@ public class DemoApplication {
 		}
 		return Optional.empty();
 	}
+	@RequestMapping("/hello")
+	public String hello(){
+		System.out.println("hello");
+		return "Hello World!";
+	}
 	@RequestMapping("/findFilteredRecipes")
 	public String findFilteredRecipes(@RequestBody Request request){
+		System.out.println("filtered");
 		currentRequest = request;
-		System.out.println(currentRequest.toString());
 		RecipeService myRecipeService = applicationContextProvider.getApplicationContext().getBean(RecipeService.class);
 		RecipeIngredientService myRecipeIngredientService = applicationContextProvider.getApplicationContext().getBean(RecipeIngredientService.class);
 		FridgeItemService myFridgeItemService = applicationContextProvider.getApplicationContext().getBean(FridgeItemService.class);
@@ -64,11 +67,13 @@ public class DemoApplication {
 			boolean found = true;
 			if (recipe.getName().toUpperCase().contains(currentRequest.getSearch().toUpperCase()) && recipe.getTime() <= currentRequest.getTime()){
 				List<RecipeIngredient> ingredientList = myRecipeIngredientService.getRecipeIngredientsById(recipe.getId());
+				List <String> ingredientStrings = new ArrayList<>();
 				for (RecipeIngredient recipeIngredient : ingredientList) {
 					//first if statement checks if the ingredient is in the items table (it should be) if not dont allow recipe
 					//second if statement checks if the recipe adheres to the users request of vegan veg or meat
 					Optional<Item> item = getItemFromList(itemList, recipeIngredient.getItemId());
 					if (item.isPresent()){
+						ingredientStrings.add(item.get().getName());
 						if (item.get().getType() < currentRequest.getRecipeType()){
 							found = false;
                             break;
@@ -90,6 +95,7 @@ public class DemoApplication {
 					}
 				}
 				if (found){
+					recipe.setIngredients(ingredientStrings);
 					myValidRecipes.add(recipe);
 				}
 
@@ -98,7 +104,6 @@ public class DemoApplication {
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(myValidRecipes);
-		System.out.println(json);
 		return json;
 
 	}

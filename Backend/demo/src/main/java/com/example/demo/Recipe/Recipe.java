@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.sql.Time;
 import java.time.Duration;
+import java.util.List;
 
 @Entity
 @Table(name = "recipes")
@@ -22,10 +23,23 @@ public class Recipe{
     private String instructions;
 
     @Column(name = "timetomake")
-    private String time;
+    private String prepTime;
 
-    @Column(name = "picturelink")
-    private String pictureLink;
+    private List<String> ingredients;
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                ", instructions='" + instructions + '\'' +
+                ", prepTime='" + prepTime + '\'' +
+                ", ingredients=" + ingredients +
+                '}';
+    }
 
     public String getName() {
         return name;
@@ -41,34 +55,22 @@ public class Recipe{
 
     public int getTime() {
 
-        if (time.length() == 8){
-            String[] values = time.split(":");
+        if (prepTime.length() == 8){
+            String[] values = prepTime.split(":");
             Duration duration = Duration.ofHours(Integer.parseInt(values[0]));
             duration = duration.plusMinutes(Integer.parseInt(values[1]));
             duration = duration.plusSeconds(Integer.parseInt(values[2]));
             return (int) duration.getSeconds();
-        } else if (time.length() == 5) {
-            String[] values = time.split(":");
+        } else if (prepTime.length() == 5) {
+            String[] values = prepTime.split(":");
             Duration duration = Duration.ofMinutes(Integer.parseInt(values[0]));
             duration = duration.plusSeconds(Integer.parseInt(values[1]));
             return (int) duration.getSeconds();
         } else {
-            return Integer.parseInt(time);
+            return Integer.parseInt(prepTime);
         }
     }
 
-    public String getPictureLink(){
-        return pictureLink;
-    }
 
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", instructions='" + instructions + '\'' +
-                ", time='" + time + '\'' +
-                ", pictureLink='" + pictureLink + '\'' +
-                '}';
-    }
+
 }
