@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,70 +43,68 @@ public class MainActivity extends Activity {
         recyclerView = findViewById(R.id.recipeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        fetchRecipes("",0,0,0); // Fetch all recipes initially
+        fetchRecipes(); // Load recipes from assets
 
         Button filterButton = findViewById(R.id.buttonFilter);
         filterButton.setOnClickListener(v -> showFilterPopup());
     }
 
-    private void fetchRecipes(String search, int recipeType, int prepTime, int userId) {
-        // Create a new Thread to perform network operations
+    private void fetchRecipes() {
+        // Create a new Thread to perform the file reading and parsing operations
         new Thread(() -> {
-            HttpURLConnection connection = null;
             BufferedReader reader = null;
-
             try {
-                // Construct the request URL
-                URL url = new URL("http://localhost:8080/findFilteredRecipes");
-                // Create the Request JSON object
-                JSONObject requestJson = new JSONObject();
-                requestJson.put("search", search);
-                requestJson.put("recipeType", recipeType);
-                requestJson.put("prepTime", prepTime);
-                requestJson.put("userId", userId);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                connection.setDoOutput(true);
-                try (OutputStream os = connection.getOutputStream()) {
-                    byte[] input = requestJson.toString().getBytes(StandardCharsets.UTF_8);
-                    os.write(input, 0, input.length);
+                // Open the recipes.json file from assets
+                AssetManager assetManager = getAssets();
+                reader = new BufferedReader(new InputStreamReader(assetManager.open("recipes.json")));
+
+                // Read the entire file content into a StringBuilder
+                StringBuilder responseBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    responseBuilder.append(line);
                 }
 
-                // Read the response
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-                    StringBuilder responseBuilder = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        responseBuilder.append(line);
-                    }
-                    JSONArray jsonResponse = new JSONArray(responseBuilder.toString());
-                    List<String> recipes = new ArrayList<>();
-                    for (int i = 0; i < jsonResponse.length(); i++) {
-                        recipes.add(jsonResponse.getString(i));
-                    }
-                    runOnUiThread(() -> {
-                        allRecipes.clear();
-                        filteredRecipes.clear();
+                // Parse the JSON response
+                JSONArray jsonResponse = new JSONArray(responseBuilder.toString());
+                List<Recipe> recipes = new ArrayList<>();
 
-                        for (String recipe : recipes) {
-                            allRecipes.add(new Recipe(""));
-                        }
-                        filteredRecipes.addAll(allRecipes);
-
-                        if (recipeAdapter == null) {
-                            recipeAdapter = new RecipeAdapter(filteredRecipes);
-                            recyclerView.setAdapter(recipeAdapter);
-                        } else {
-                            recipeAdapter.notifyDataSetChanged();
-                        }
-                        Toast.makeText(MainActivity.this, "Recipes loaded", Toast.LENGTH_SHORT).show();
-                    });
-                } else {
-                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Failed to load recipes: HTTP " + responseCode, Toast.LENGTH_SHORT).show());
+                // Parse the JSON array into Recipe objects
+                for (int i = 0; i < jsonResponse.length(); i++) {
+                    JSONObject recipeJson = jsonResponse.getJSONObject(i);
+                    String name = recipeJson.getString("name");
+                    String prepTime = recipeJson.getString("prepTime");
+                    List<String> ingredients = new ArrayList<>();
+                    JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                    for (int j = 0; j < ingredientsJson.length(); j++) {
+                        ingredients.add(ingredientsJson.getString(j));
+                    }
+                    // Create a Recipe object and add it to the list
+                    recipes.add(new Recipe(name, prepTime, ingredients));
                 }
+
+                // Update the UI with the recipes list
+                runOnUiThread(() -> {
+                    allRecipes.clear();
+                    filteredRecipes.clear();
+
+                    // Add the recipes to the list
+                    allRecipes.addAll(recipes);  // Ensure you're adding the parsed recipes here
+                    filteredRecipes.addAll(allRecipes);  // Update filtered recipes list
+
+                    // Update the RecyclerView and notify the adapter
+                    if (recipeAdapter == null) {
+                        recipeAdapter = new RecipeAdapter(filteredRecipes);
+                        recyclerView.setAdapter(recipeAdapter);
+                    } else {
+                        recipeAdapter.notifyDataSetChanged();
+                    }
+
+                    // Update the recipe count text
+                    updateRecipeCount();
+
+                    Toast.makeText(MainActivity.this, "Recipes loaded", Toast.LENGTH_SHORT).show();
+                });
             } catch (Exception e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
@@ -113,10 +112,16 @@ public class MainActivity extends Activity {
                 try {
                     if (reader != null) reader.close();
                 } catch (Exception ignored) {}
-                if (connection != null) connection.disconnect();
             }
         }).start();
     }
+
+    private void updateRecipeCount() {
+        // Assuming you have a TextView to show the recipe count, update it
+        TextView recipeCountText = findViewById(R.id.recipeCountText);  // Replace with your actual TextView ID
+        recipeCountText.setText("Recipes: " + filteredRecipes.size());
+    }
+
 
 
     private void showFilterPopup() {

@@ -9,7 +9,7 @@ public class Recipe {
     private String instructions;
     private List<String> ingredients;
 
-    public Recipe(String name) {
+    public Recipe(String name, String prepTime, List<String> ingredients) {
         this.name = name;
         this.prepTime = prepTime;
         this.ingredients = ingredients;
