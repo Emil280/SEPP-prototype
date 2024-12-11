@@ -7,14 +7,12 @@ public class Recipe {
     private String prepTime;
     private List<String> ingredients;
 
-    // Constructor
     public Recipe(String name) {
         this.name = name;
         this.prepTime = prepTime;
         this.ingredients = ingredients;
     }
 
-    // Getters and Setters
     public String getName() {
         return name;
     }

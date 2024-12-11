@@ -28,11 +28,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01e1d0f3-0030-47e2-a2ec-5e8f1ec77b09" name="Changes" comment="hopefully fixed empty request issue">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/myapplication/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/myapplication/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/myapplication/RecipeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/myapplication/RecipeUtils.java" afterDir="false" />
-    </list>
+    <list default="true" id="01e1d0f3-0030-47e2-a2ec-5e8f1ec77b09" name="Changes" comment="hopefully fixed empty request issue part 2 lol" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -271,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733930100157</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="hopefully fixed empty request issue part 2 lol">
+      <option name="closed" value="true" />
+      <created>1733931831359</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733931831359</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -280,6 +284,7 @@
     <MESSAGE value="Small UI fixes" />
     <MESSAGE value="Small UI fixes and added some networking that maybe works but not tested" />
     <MESSAGE value="hopefully fixed empty request issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="hopefully fixed empty request issue" />
+    <MESSAGE value="hopefully fixed empty request issue part 2 lol" />
+    <option name="LAST_COMMIT_MESSAGE" value="hopefully fixed empty request issue part 2 lol" />
   </component>
 </project>

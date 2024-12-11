@@ -29,8 +29,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Recipe recipe = recipes.get(position);
         holder.recipeName.setText(recipe.getName());
         holder.recipePrepTime.setText("Prep Time: " + recipe.getPrepTime());
-
-        // Combine ingredients into a single string and set it
         StringBuilder ingredientsList = new StringBuilder();
         for (String ingredient : recipe.getIngredients()) {
             ingredientsList.append(ingredient).append("\n");
@@ -42,8 +40,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public int getItemCount() {
         return recipes.size();
     }
-
-    // ViewHolder to hold references to the TextViews in item_recipe.xml
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName;
         TextView recipePrepTime;
