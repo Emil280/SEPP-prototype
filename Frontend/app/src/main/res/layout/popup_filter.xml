@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Vegan Checkbox -->
+    <CheckBox
+        android:id="@+id/checkboxVegan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vegan" />
+
+    <!-- Vegetarian Checkbox -->
+    <CheckBox
+        android:id="@+id/checkboxVegetarian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vegetarian" />
+
+    <!-- Prep Time Filters -->
+    <TextView
+        android:text="Prep Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <CheckBox
+        android:id="@+id/checkbox0_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0-20 min" />
+
+    <CheckBox
+        android:id="@+id/checkbox20_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20-40 min" />
+
+    <CheckBox
+        android:id="@+id/checkbox40_60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40-60 min" />
+
+    <CheckBox
+        android:id="@+id/checkbox60plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60+ min" />
+
+    <!-- Apply Filter Button -->
+    <Button
+        android:id="@+id/buttonApplyFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Filters"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
