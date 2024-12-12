@@ -15,9 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootApplication
 @RestController
@@ -108,5 +106,31 @@ public class DemoApplication {
 
 	}
 
+	@GetMapping("/randomRecipe")
+	public String getRandomRecipe() {
+		RecipeService recipeService = applicationContextProvider.getApplicationContext().getBean(RecipeService.class);
+		List<Recipe> recipes = recipeService.getRecipes();
+
+		if (recipes.isEmpty()) {
+			return "{}";
+		}
+
+		Recipe randomRecipe = recipes.get(new Random().nextInt(recipes.size()));
+		return new Gson().toJson(randomRecipe);
+	}
+
+	@GetMapping("/randomRecipes")
+	public String getRandomRecipes() {
+		RecipeService recipeService = applicationContextProvider.getApplicationContext().getBean(RecipeService.class);
+		List<Recipe> recipes = recipeService.getRecipes();
+
+		if (recipes.isEmpty()) {
+			return "[]";
+		}
+
+		Collections.shuffle(recipes);
+		List<Recipe> randomRecipes = recipes.subList(0, Math.min(10, recipes.size()));
+		return new Gson().toJson(randomRecipes);
+	}
 
 }
