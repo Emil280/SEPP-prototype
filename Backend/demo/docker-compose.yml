@@ -1,0 +1,19 @@
+services:
+ sshapi:
+  build: .
+  ports:
+   - 8080:8080
+  environment:
+   - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/SSH
+   - SPRING_DATASOURCE_USERNAME=postgres
+   - SPRING_DATASOURCE_PASSWORD= test
+  depends_on:
+   - postgres
+ postgres:
+  image: postgres:latest
+  environment:
+   - POSTGRES_PASSWORD= test
+  volumes:
+   - ./db.sql:/docker-entrypoint-initdb.d/init.sql
+
+
